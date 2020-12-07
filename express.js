@@ -4,9 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const rosRouter = require('./routes/ros')
+const rosRouter = require('./src/routes/ros')
 
 
 
@@ -14,7 +12,7 @@ module.exports.init = () => {
     var app = express();
     console.log('App Init')
 // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
+    app.set('views', path.join(__dirname + '/src', 'views'));
     app.set('view engine', 'pug');
 
     app.use(logger('dev'));
@@ -23,8 +21,6 @@ module.exports.init = () => {
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
 
-    app.use('/', indexRouter);
-    app.use('/users', usersRouter);
     app.use('/ros', rosRouter)
 
 // catch 404 and forward to error handler

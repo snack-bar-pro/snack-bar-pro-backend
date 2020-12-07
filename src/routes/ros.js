@@ -1,10 +1,10 @@
-const config = require('../lib/config').config
+const config = require('../../lib/config').config
 var express = require('express');
 var router = express.Router();
-const ROSLIB = require('roslib')
+const ROSLIB = require('roslib');
 
 router.get('/publishTest', (req, res, next) => {
-    console.log(config.ros)
+    console.log(config.ros);
     if(config && config.ros && config.ros.isConnected){
         const topic = new ROSLIB.Topic({
             ros : config.ros,
