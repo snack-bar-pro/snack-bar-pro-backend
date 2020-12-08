@@ -1,7 +1,7 @@
 const moveBaseService = require('../../sevice/moveBase/MoveBaseService');
 
 const setTargetPose = (req, res) => {
-    let targetPose = req.targetPose;
+    let targetPose = req.body.targetPose;
     try {
         moveBaseService.setTargetPoseGoal(targetPose);
         return res.json({
