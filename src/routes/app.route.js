@@ -11,5 +11,11 @@ module.exports = function (app) {
             message: 'test 123 sccuess',
             status: 200,
         })
-    })
+    });
+    app.route('/api/testJenkins').get(function (req, res) {
+        return res.json({
+            message: 'test jenkins sccuess',
+            status: 200,
+        })
+    });
 };
