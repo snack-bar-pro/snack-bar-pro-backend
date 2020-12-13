@@ -3,7 +3,7 @@ const rosUtil = require('../../util/RosUtil');
 /** move base client set up **/
 const SERVER_NAME = 'move_base';
 
-const moveBaseClient = rosUtil.clientMaker(SERVER_NAME, 'move_base_msgs/MoveBaseAction');
+const moveBaseClient = rosUtil.clientMaker(SERVER_NAME, 'move_base_msgs/MoveBaseActionGoal');
 
 const setTargetPoseGoal = params => {
     /** create pose **/
