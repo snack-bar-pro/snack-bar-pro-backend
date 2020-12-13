@@ -14,7 +14,7 @@ module.exports = function (app) {
     });
     app.route('/api/testJenkins').get(function (req, res) {
         return res.json({
-            message: 'test jenkins success 123',
+            message: 'test jenkins success 1234',
             status: 200,
         })
     });
