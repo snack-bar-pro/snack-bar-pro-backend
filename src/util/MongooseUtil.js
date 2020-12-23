@@ -20,7 +20,7 @@ function connect () {
     if (db) {
         return db;
     }
-    let uri = 'mongodb://localhost:27017/snackbar';
+    let uri = 'mongodb://172.17.25.199:27017/snackbar';
     console.log(chalk.green(`connect gps mongodb url ${uri}`));
     db = mongoose.createConnection(uri, opt);
     return db;
