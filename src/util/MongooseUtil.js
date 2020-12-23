@@ -2,6 +2,8 @@
 
 const chalk = require('chalk');
 const mongoose = require('mongoose');
+const glob = require('glob');
+const path = require('path');
 
 let db = null;
 const loadModels = function () {
