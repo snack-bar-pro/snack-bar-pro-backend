@@ -1,10 +1,17 @@
 const express = require('./express')
 const config = require('./lib/config')
+const mongodb = require('./mongo_init')
+const mongoose = require('./src/util/MongooseUtil')
 
+async function initDb (){
+  await mongodb.connect();
+  const db = await mongoose.connect();
+  return express.init(db);
+}
+module.exports.init = async () => {
+  config.init();
 
-module.exports.init = () => {
-  const app = express.init();
-  config.init()
+  const app = await initDb();
   console.log('Server running in Port: 3001')
   app.listen(3001)
 }

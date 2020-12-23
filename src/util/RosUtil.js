@@ -4,7 +4,7 @@ const ROSLIB = require('roslib');
 
 const topicMaker = (topicName, type) => {
     return new ROSLIB.Topic({
-        ros: config.ros || new ROSLIB.Ros(),
+        ros: config.ros,
         name: topicName,
         messageType: type,
     });
@@ -12,7 +12,7 @@ const topicMaker = (topicName, type) => {
 
 const clientMaker = (serverName, actionName) => {
     return new ROSLIB.ActionClient({
-        ros: config.ros || new ROSLIB.Ros(),
+        ros: config.ros,
         serverName: `/${serverName}`,
         actionName: actionName,
     });

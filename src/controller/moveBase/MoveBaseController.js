@@ -1,4 +1,4 @@
-const moveBaseService = require('../../sevice/moveBase/MoveBaseService');
+const moveBaseService = require('../../service/moveBase/MoveBaseService');
 
 const setTargetPose = (req, res) => {
     let targetPose = req.body.targetPose;
