@@ -1,4 +1,5 @@
 const rosUtil = require('../../util/RosUtil');
+const { getReached, setReached } = require('../../data/MoveBaseResult')
 
 /** move base client set up **/
 const SERVER_NAME = 'move_base';
@@ -16,6 +17,12 @@ const setTargetPoseGoal = params => {
     goal.send();
 };
 
+const getMoveBaseStatus = () => {
+    const result = getReached();
+    setReached(false);
+    return result;
+}
+
 const _buildGoal = goalMessage => {
     return rosUtil.goalMaker(moveBaseClient, goalMessage);
 };
@@ -31,4 +38,5 @@ const _getPose = params => {
 
 module.exports = {
     setTargetPoseGoal,
+    getMoveBaseStatus
 };

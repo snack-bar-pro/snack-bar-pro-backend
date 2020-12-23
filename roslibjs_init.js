@@ -1,10 +1,12 @@
 const ROSLIB = require('roslib')
 
+const {setReached} = require('./src/data/MoveBaseResult')
+
 module.exports.init = () => {
     console.log('=======init ros==========')
     const ros = new ROSLIB.Ros({
         //rosbridge
-        url : 'ws://localhost:9090'
+        url : 'ws://192.168.0.113:9090'
     });
 
     ros.on('connection', function() {
@@ -18,6 +20,22 @@ module.exports.init = () => {
     ros.on('close', function() {
         console.log('Connection to websocket server closed.');
     });
+
+    const listener = new ROSLIB.Topic({
+        ros : ros,
+        name : '/move_base/result',
+        messageType : 'move_base_msgs/MoveBaseActionResult'
+    });
+
+    listener.subscribe(function(message) {
+        if (message.status.status === 3) {
+            setReached(true);
+        }
+        console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
+    });
+
+    // https://blog.csdn.net/Draonly/article/details/103292502
+    
     return ros;
 }
 
