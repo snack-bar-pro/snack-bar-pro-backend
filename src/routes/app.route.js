@@ -5,6 +5,7 @@ module.exports = function (app) {
     const moveBaseController = require('../controller/moveBase/MoveBaseController');
 
     app.route('/api/setTargetPose').post(moveBaseController.setTargetPose);
+    app.route('/api/move_base/result').get(moveBaseController.getMoveBaseStatus);
     app.route('/api/testApi').get(function (req, res) {
         return res.json({
             message: 'test 123 sccuess',
