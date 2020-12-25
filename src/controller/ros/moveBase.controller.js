@@ -17,6 +17,15 @@ const setTargetPose = (req, res) => {
     }
 };
 
+const getMoveBaseStatus = (req, res) => {
+    const reached =  moveBaseService.getMoveBaseStatus();
+    return res.json({
+        status: 200,
+        reached,
+    })
+}
+
 module.exports = {
     setTargetPose,
+    getMoveBaseStatus
 };
