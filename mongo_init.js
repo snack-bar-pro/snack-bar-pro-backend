@@ -11,7 +11,7 @@ function connect() {
         return mongoDb;
     }
     let uri = 'mongodb://172.17.25.199:27017/snackbar';
-    console.log(chalk.green(`connect gps native mongodb url ${uri}`));
+    console.log(chalk.green(`connect snackbar native mongodb url ${uri}`));
     mongoClient.connect(uri, opt, function (err, client) {
         assert.strictEqual(null, err);
         if (uri.endsWith('snackbar')) {
@@ -20,7 +20,7 @@ function connect() {
         else {
             mongoDb = client.db();
         }
-        console.log(chalk.green(`connect snackbar native mongodb success on db ${mongoDb}`));
+        console.log(chalk.green(`connect snackbar native mongodb success on db ${mongoDb.toString()}`));
     });
 }
 async function disconnect () {

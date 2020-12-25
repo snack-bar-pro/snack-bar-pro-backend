@@ -1,4 +1,4 @@
-const rosUtil = require('../../util/RosUtil');
+const rosUtil = require('../../util/ros.util');
 
 /** move base client set up **/
 const SERVER_NAME = 'move_base';
