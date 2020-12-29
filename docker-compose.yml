@@ -1,7 +1,7 @@
 version: "2.0"
 services:
   rosbackend:
-    build: /app
+    build: .
     restart: always
     container_name: rosbackend
 
