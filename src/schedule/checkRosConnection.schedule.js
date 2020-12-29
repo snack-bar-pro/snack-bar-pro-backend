@@ -6,9 +6,9 @@ const chalk = require('chalk');
 
 const checkRosConnection = ()=>{
     schedule.scheduleJob('5 * * * * *',()=>{
-        console.info(chalk.green('=====checking ros connection==='));
-        console.info(chalk.green(`==== ros: ${config.ros} ====`));
         if (_.isEmpty(config.ros)) {
+            console.info(chalk.green('=====checking ros connection==='));
+            console.info(chalk.green(`==== ros: ${config.ros} ====`));
             console.error(chalk.red('Could not connect to ros websocket!'));
             config.ros = ros.init();
         }

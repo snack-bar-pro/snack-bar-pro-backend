@@ -1,4 +1,5 @@
-const ROSLIB = require('roslib')
+const ROSLIB = require('roslib');
+const config = require('./lib/config');
 
 const {setReached} = require('./src/data/MoveBaseResult')
 
@@ -19,6 +20,7 @@ module.exports.init = () => {
 
     ros.on('close', function() {
         console.log('Connection to websocket server closed.');
+        config.ros = undefined;
     });
 
     const listener = new ROSLIB.Topic({
@@ -35,7 +37,7 @@ module.exports.init = () => {
     });
 
     // https://blog.csdn.net/Draonly/article/details/103292502
-    
+
     return ros;
 }
 

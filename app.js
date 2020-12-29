@@ -11,9 +11,8 @@ async function initDb (){
 }
 module.exports.init = async () => {
   config.init();
-  // const app = await initDb();
+  const app = await initDb();
   checkRosConnectionSchedule.checkRosConnection();
-  const app = express.init();
   console.log('Server running in Port: 3001')
   app.listen(3001)
-}
+};
