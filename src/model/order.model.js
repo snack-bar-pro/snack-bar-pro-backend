@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
     id: String,
+    orderStatus: String,
     address: Object,
     totalPrice: Number,
     products: Array,
-    createAt: String,
-    finishedAt: String,
+    createDateTime: Number,
+    completeDateTime: Number,
     user: String,
 });
 

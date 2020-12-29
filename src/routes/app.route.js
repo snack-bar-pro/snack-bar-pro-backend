@@ -20,4 +20,6 @@ module.exports = function (app) {
     });
     app.route('/api/orders').post(orderController.createNewOrder);
     app.route('/api/orders').get(orderController.findOrder);
+    app.route('/api/orders/:id').get(orderController.findOrderById);
+    app.route('/api/orders').put(orderController.updateOrder);
 };
