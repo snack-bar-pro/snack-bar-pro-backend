@@ -23,6 +23,7 @@ const getMoveBaseStatus = () => {
 
 const _buildGoal = goalMessage => {
     const moveBaseClient = rosUtil.clientMaker(SERVER_NAME, 'move_base_msgs/MoveBaseAction');
+    moveBaseClient.ros.connect('ws://172.17.25.199:9090');
     return rosUtil.goalMaker(moveBaseClient, goalMessage);
 };
 
