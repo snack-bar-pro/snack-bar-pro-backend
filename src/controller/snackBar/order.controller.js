@@ -3,7 +3,7 @@ const orderService = require('../../service/snackBar/order.service');
 const createNewOrder = async (req, res) => {
   let order = req.body;
   try {
-      await orderService.createNewOrder(order);
+      order = await orderService.createNewOrder(order);
       return res.json({
           status: 200,
           message: 'created new order.',
