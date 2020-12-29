@@ -4,8 +4,6 @@ const { getReached, setReached } = require('../../data/MoveBaseResult')
 /** move base client set up **/
 const SERVER_NAME = 'move_base';
 
-const moveBaseClient = rosUtil.clientMaker(SERVER_NAME, 'move_base_msgs/MoveBaseAction');
-
 const setTargetPoseGoal = params => {
     /** create pose **/
     let pose = _getPose(params);
@@ -24,6 +22,8 @@ const getMoveBaseStatus = () => {
 }
 
 const _buildGoal = goalMessage => {
+    const moveBaseClient = rosUtil.clientMaker(SERVER_NAME, 'move_base_msgs/MoveBaseAction');
+    moveBaseClient.ros.connect('ws://172.17.25.199:9090');
     return rosUtil.goalMaker(moveBaseClient, goalMessage);
 };
 
