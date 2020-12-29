@@ -1,6 +1,8 @@
 const moveBaseService = require('../../service/ros/moveBase.service');
+const {setReached} = require('../../data/MoveBaseResult')
 
 const setTargetPose = (req, res) => {
+    setReached(false);
     let targetPose = req.body.targetPose;
     try {
         moveBaseService.setTargetPoseGoal(targetPose);
