@@ -1,5 +1,6 @@
 const config = require('../../lib/config').config
 var express = require('express');
+const path = require('path')
 
 module.exports = function (app) {
     const moveBaseController = require('../controller/ros/moveBase.controller');
@@ -7,6 +8,7 @@ module.exports = function (app) {
     const commodityController = require('../controller/snackBar/commodity.controller');
     app.route('/api/setTargetPose').post(moveBaseController.setTargetPose);
     app.route('/api/move_base/result').get(moveBaseController.getMoveBaseStatus);
+    // app.route('/api/move_base/reached').post(moveBaseController.setMoveBaseStatus);
     app.route('/api/testApi').get(function (req, res) {
         return res.json({
             message: 'test 123 sccuess',
@@ -30,4 +32,6 @@ module.exports = function (app) {
     app.route('/api/commodity').get(commodityController.findAll)
     app.route('/api/commodity').post(commodityController.saveCommodity)
     app.route('/api/commodity').put(commodityController.updateCommodity)
+    //static file
+    app.use('/static', express.static('public'))
 };
