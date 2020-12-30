@@ -9,11 +9,11 @@ const saveOrder = order => {
     return newOrder.save();
 };
 const findOrder = () => {
-    return Order.find({'user': 'admin'}).lean();
+    return Order.find({'user': 'admin'}).sort({'createDateTime': -1}).lean();
 };
 const findOrderById = (id) => {
     const objectId = mongoose.Types.ObjectId(id)
-    return Order.find({'_id': objectId}).lean();
+    return Order.findOne({'_id': objectId}).lean();
 };
 const updateOrder = (order) => {
     const id = order._id;
