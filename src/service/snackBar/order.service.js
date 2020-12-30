@@ -5,7 +5,7 @@ const _ = require('loadsh');
 
 const createNewOrder = async order => {
     order.createDateTime = dateUtil.now();
-    order.orderStatus = 'processing'
+    order.orderStatus = 'pending'
     const savedOrder = await orderRepository.saveOrder(order)
     return savedOrder
 };
@@ -38,9 +38,15 @@ function formatCreateDateTime(order) {
     return order
 }
 
+const updateOrderStatus = (status, order) => {
+    order.status = status;
+    orderService.updateOrder(order);
+};
+
 module.exports = {
     createNewOrder,
     findOrder,
     findOrderById,
-    updateOrder
+    updateOrder,
+    updateOrderStatus
 };
