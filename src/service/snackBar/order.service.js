@@ -40,6 +40,9 @@ function formatCreateDateTime(order) {
 
 const updateOrderStatus = (status, order) => {
     order.status = status;
+    if (status === 'complete') {
+        order.completeDateTime = dateUtil.now();
+    }
     orderService.updateOrder(order);
 };
 

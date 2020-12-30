@@ -3,9 +3,9 @@ class OrderQueue {
     this.orderQueue = [];
   }
   isEmpty() {
-    return !order || order.length <= 0;
+    return !this.orderQueue || this.orderQueue.length <= 0;
   }
-  push() {
+  push(order) {
     this.orderQueue.push(order);
   }
   shift() {
