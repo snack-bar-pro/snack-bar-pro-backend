@@ -49,11 +49,10 @@ module.exports.init = () => {
         try {
           const currentOrder = orderQueue.shift();
           const isReached = message.status.status === 3;
-          if (currentOrder) {
-            orderService.updateOrderStatus(isReached ? "reached" : "error", currentOrder);
-          }
+          currentOrder && orderService.updateOrderStatus(isReached ? 'reached' : 'error', currentOrder);
+          
           setTimeout(() => {
-            isReached && orderService.updateOrderStatus('completed', currentOrder);
+            currentOrder && isReached && orderService.updateOrderStatus('completed', currentOrder);
             const nextOrder = orderQueue.first();
             if (nextOrder) {
               orderService.updateOrderStatus("processing", nextOrder);
