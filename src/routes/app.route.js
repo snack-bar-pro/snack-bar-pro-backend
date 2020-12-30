@@ -32,6 +32,4 @@ module.exports = function (app) {
     app.route('/api/commodity').get(commodityController.findAll)
     app.route('/api/commodity').post(commodityController.saveCommodity)
     app.route('/api/commodity').put(commodityController.updateCommodity)
-    //static file
-    app.use('/static', express.static('public'))
 };
