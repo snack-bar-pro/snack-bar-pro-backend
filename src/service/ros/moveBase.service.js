@@ -1,5 +1,6 @@
 const rosUtil = require('../../util/ros.util');
 const { getReached, setReached } = require('../../data/MoveBaseResult')
+const { eventEmitter } = require('../../eventBus');
 
 /** move base client set up **/
 const SERVER_NAME = 'move_base';
@@ -35,6 +36,10 @@ const _getGoalMessage = pose => {
 const _getPose = params => {
     return rosUtil.poseMaker(params);
 };
+
+eventEmitter.on('setTargetPoseEvent', function(position) {
+    setTargetPoseGoal(position)
+})
 
 module.exports = {
     setTargetPoseGoal,
