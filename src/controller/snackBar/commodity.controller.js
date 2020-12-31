@@ -80,10 +80,18 @@ const updateCommodity = async (req, res) => {
   }
 }
 
+const updateCommodityImage = async (req, res) => {
+  return res.json({
+    status: 200,
+    message: 'Upload image success!'
+  })
+}
+
 module.exports = {
   findAll,
   findById,
   delCommodity,
   saveCommodity,
-  updateCommodity
+  updateCommodity,
+  updateCommodityImage
 }
