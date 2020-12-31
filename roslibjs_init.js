@@ -1,7 +1,23 @@
 const ROSLIB = require('roslib');
 const config = require('./lib/config');
+const { orderQueue } = require('./src/orderQueue');
+const { eventEmitter } = require('./src/eventBus');
+const orderService = require('./src/service/snackBar/order.service');
+const { setReached } = require('./src/data/MoveBaseResult');
 
-const {setReached} = require('./src/data/MoveBaseResult')
+const homePosition = {
+  position: {
+    x: 0.0884503321905,
+    y: 0.028505974591,
+    z: 0.0,
+  },
+  orientation: {
+    x: 0.0,
+    y: 0.0,
+    z: 0.00310461688896,
+    w: 0.0,
+  },
+};
 
 module.exports.init = () => {
     console.log('=======init ros==========')
@@ -29,11 +45,30 @@ module.exports.init = () => {
         messageType : 'move_base_msgs/MoveBaseActionResult'
     });
 
-    listener.subscribe(function(message) {
-        if (message.status.status === 3) {
-            setReached(true);
-        }
+    listener.subscribe(async (message) => {
         console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
+        if (message.status.status === 2) {
+          return;
+        }
+        try {
+          const currentOrder = orderQueue.shift();
+          const isReached = message.status.status === 3;
+          currentOrder && await orderService.updateOrderStatus(isReached ? 'reached' : 'error', currentOrder);
+          isReached && setReached(true);
+          
+          setTimeout(async () => {
+            currentOrder && isReached && await orderService.updateOrderStatus('completed', currentOrder);
+            const nextOrder = orderQueue.first();
+            if (nextOrder) {
+              await orderService.updateOrderStatus("processing", nextOrder);
+              eventEmitter.emit('setTargetPoseEvent', nextOrder.address);
+            } else {
+              eventEmitter.emit('setTargetPoseEvent', homePosition);
+            }
+          }, 10000);
+        } catch (e) {
+          console.log(e.message);
+        }
     });
 
     // https://blog.csdn.net/Draonly/article/details/103292502
