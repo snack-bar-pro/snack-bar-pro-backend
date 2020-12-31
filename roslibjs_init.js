@@ -19,11 +19,13 @@ const homePosition = {
   }
 };
 
+let atHome = false;
+
 module.exports.init = () => {
     console.log('=======init ros==========')
     const ros = new ROSLIB.Ros({
         //rosbridge
-        url : 'ws://172.17.25.199:9090'
+        url : 'ws://192.168.253.128:9090'
     });
 
     ros.on('connection', function() {
@@ -47,9 +49,6 @@ module.exports.init = () => {
 
     listener.subscribe(async (message) => {
         console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
-        if (message.status.status === 2) {
-          return;
-        }
         try {
           const currentOrder = orderQueue.shift();
           const isReached = message.status.status === 3;
@@ -62,8 +61,10 @@ module.exports.init = () => {
             if (nextOrder) {
               await orderService.updateOrderStatus("processing", nextOrder);
               eventEmitter.emit('setTargetPoseEvent', nextOrder.address);
-            } else {
+              atHome = false;
+            } else if (!atHome) {
               eventEmitter.emit('setTargetPoseEvent', homePosition);
+              atHome = true;
             }
           }, 10000);
         } catch (e) {
