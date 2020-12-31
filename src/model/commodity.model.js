@@ -7,6 +7,7 @@ const commoditySchema = new Schema({
   title: String,
   desc: String,
   thumb: String,
+  category: String,
   createTime: {
     type: Date,
     default: Date.now
