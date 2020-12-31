@@ -6,6 +6,7 @@ module.exports = function (app) {
     const moveBaseController = require('../controller/ros/moveBase.controller');
     const orderController = require('../controller/snackBar/order.controller');
     const commodityController = require('../controller/snackBar/commodity.controller');
+    const loginController = require('../controller/snackBar/login.controller')
     app.route('/api/setTargetPose').post(moveBaseController.setTargetPose);
     app.route('/api/move_base/result').get(moveBaseController.getMoveBaseStatus);
     // app.route('/api/move_base/reached').post(moveBaseController.setMoveBaseStatus);
@@ -31,5 +32,6 @@ module.exports = function (app) {
     app.route('/api/commodity/:id').delete(commodityController.delCommodity)
     app.route('/api/commodity').get(commodityController.findAll)
     app.route('/api/commodity').post(commodityController.saveCommodity)
-    app.route('/api/commodity').put(commodityController.updateCommodity)
+    //login
+    app.route('/api/login').get(loginController.login)
 };

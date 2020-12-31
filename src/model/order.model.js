@@ -10,6 +10,7 @@ const orderSchema = new Schema({
     createDateTime: Number,
     completeDateTime: Number,
     user: String,
+    openid: String
 });
 
 const order = mongoose.model('order', orderSchema, 'order');
