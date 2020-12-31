@@ -9,14 +9,14 @@ const homePosition = {
   position: {
     x: 0.0884503321905,
     y: 0.028505974591,
-    z: 0.0,
+    z: 0.0
   },
   orientation: {
     x: 0.0,
     y: 0.0,
     z: 0.00310461688896,
-    w: 0.0,
-  },
+    w: 0.999995180665
+  }
 };
 
 module.exports.init = () => {
