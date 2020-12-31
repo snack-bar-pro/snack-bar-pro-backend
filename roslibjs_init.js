@@ -25,7 +25,7 @@ module.exports.init = () => {
     console.log('=======init ros==========')
     const ros = new ROSLIB.Ros({
         //rosbridge
-        url : 'ws://192.168.253.128:9090'
+        url : 'ws://172.17.25.199:9090'
     });
 
     ros.on('connection', function() {
