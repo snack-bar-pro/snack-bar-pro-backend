@@ -1,8 +1,9 @@
 const ROSLIB = require('roslib');
 const config = require('./lib/config');
 const { orderQueue } = require('./src/orderQueue');
+const { eventEmitter } = require('./src/eventBus');
 const orderService = require('./src/service/snackBar/order.service');
-const {setReached} = require('./src/data/MoveBaseResult')
+const { setReached } = require('./src/data/MoveBaseResult');
 
 const homePosition = {
   position: {
@@ -44,21 +45,25 @@ module.exports.init = () => {
         messageType : 'move_base_msgs/MoveBaseActionResult'
     });
 
-    listener.subscribe(function(message) {
+    listener.subscribe(async (message) => {
         console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
+        if (message.status.status === 2) {
+          return;
+        }
         try {
           const currentOrder = orderQueue.shift();
           const isReached = message.status.status === 3;
-          currentOrder && orderService.updateOrderStatus(isReached ? 'reached' : 'error', currentOrder);
+          currentOrder && await orderService.updateOrderStatus(isReached ? 'reached' : 'error', currentOrder);
+          isReached && setReached(true);
           
-          setTimeout(() => {
-            currentOrder && isReached && orderService.updateOrderStatus('completed', currentOrder);
+          setTimeout(async () => {
+            currentOrder && isReached && await orderService.updateOrderStatus('completed', currentOrder);
             const nextOrder = orderQueue.first();
             if (nextOrder) {
-              orderService.updateOrderStatus("processing", nextOrder);
-              moveBaseService.setTargetPoseGoal(nextOrder.address);
+              await orderService.updateOrderStatus("processing", nextOrder);
+              eventEmitter.emit('setTargetPoseEvent', nextOrder.address);
             } else {
-              moveBaseService.setTargetPoseGoal(homePosition);
+              eventEmitter.emit('setTargetPoseEvent', homePosition);
             }
           }, 10000);
         } catch (e) {

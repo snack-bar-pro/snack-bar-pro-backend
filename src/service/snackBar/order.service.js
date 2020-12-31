@@ -1,7 +1,7 @@
 const order = require('../../model/order.model');
 const orderRepository = require('../../repository/snackBar/order.repository');
 const dateUtil = require('../../util/date.util');
-const _ = require('loadsh');
+const _ = require('lodash');
 
 const createNewOrder = async order => {
     order.createDateTime = dateUtil.now();
@@ -38,12 +38,12 @@ function formatCreateDateTime(order) {
     return order
 }
 
-const updateOrderStatus = (status, order) => {
-    order.status = status;
+const updateOrderStatus = async (status, order) => {
+    order.orderStatus = status;
     if (status === 'complete') {
         order.completeDateTime = dateUtil.now();
     }
-    orderService.updateOrder(order);
+    await updateOrder(order);
 };
 
 module.exports = {

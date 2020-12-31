@@ -43,7 +43,7 @@ const handleOrder = async (req, res) => {
   try {
     order = await orderService.createNewOrder(order);
     if (orderQueue.isEmpty()) {
-      orderService.updateOrderStatus('processing', order);
+      await orderService.updateOrderStatus('processing', order);
       moveBaseService.setTargetPoseGoal(order.address);
     }
     orderQueue.push(order);
