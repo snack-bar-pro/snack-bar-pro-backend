@@ -8,6 +8,9 @@ const saveOrder = order => {
     });
     return newOrder.save();
 };
+const searchOrder = (params) => {
+    return Order.find(params).lean();
+};
 const findOrder = () => {
     return Order.find({'user': 'admin'}).sort({'createDateTime': -1}).lean();
 };
@@ -25,5 +28,6 @@ module.exports = {
     saveOrder,
     findOrder,
     findOrderById,
-    updateOrder
+    updateOrder,
+    searchOrder
 };

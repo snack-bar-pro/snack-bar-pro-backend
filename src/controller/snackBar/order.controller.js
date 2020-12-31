@@ -13,7 +13,7 @@ const createNewOrder = async (req, res) => {
 };
 const findOrder = async (req, res) => {
   try {
-      let order = await orderService.findOrder();
+      let order = await orderService.searchOrder(req.query);
       return res.status(200).json(order);
   }catch (e) {
     return res.status(500).json({message: e.message});

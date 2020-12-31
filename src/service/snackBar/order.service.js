@@ -15,6 +15,11 @@ const findOrder = async () => {
     return orders.map(n => formatCreateDateTime(n))
 };
 
+const searchOrder = async (params) => {
+    const orders = await orderRepository.searchOrder(params)
+    return orders.map(n => formatCreateDateTime(n))
+};
+
 const findOrderById = async (id) => {
     const orders = await orderRepository.findOrderById(id)
     formatCreateDateTime(orders)
@@ -51,5 +56,6 @@ module.exports = {
     findOrder,
     findOrderById,
     updateOrder,
-    updateOrderStatus
+    updateOrderStatus,
+    searchOrder
 };
