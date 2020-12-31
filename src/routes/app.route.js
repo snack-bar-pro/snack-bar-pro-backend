@@ -33,6 +33,7 @@ module.exports = function (app) {
     app.route('/api/commodity').get(commodityController.findAll)
     app.route('/api/commodity').put(commodityController.updateCommodity)
     app.route('/api/commodity').post(commodityController.saveCommodity)
+    app.route('/api/commodity/image').post(commodityController.updateCommodityImage)
     //login
     app.route('/api/login').get(loginController.login)
 };
