@@ -5,28 +5,28 @@ const mongoose = require('mongoose');
 const glob = require('glob');
 const path = require('path');
 
-let db = null;
 const loadModels = function () {
+    console.log(`${path.join(__dirname, '../model')}/*.model.js`);
     const modelPatterns = glob.sync(`${path.join(__dirname, '../model')}/*.model.js`);
     modelPatterns.forEach(modelPath => {
         require(modelPath);
     });
 };
-function connect () {
+async function connect () {
     loadModels();
     let opt = {
         'readPreference': 'nearest',
     };
-    if (db) {
-        return db;
-    }
-    let uri = 'mongodb://localhost:27017/snackbar';
-    console.log(chalk.green(`connect gps mongodb url ${uri}`));
-    db = mongoose.createConnection(uri, opt);
+    let uri = 'mongodb://172.17.25.199:27017/snackbar';
+    let db = await mongoose.connect(uri, opt).catch(error => {
+        console.error(chalk.red('Could not connect to MongoDB!'));
+        console.log(error);
+    });
+    // Enabling mongoose debug mode if required
     return db;
 }
 async function disconnect () {
-    await db.disconnect().catch(error => {
+    await mongoose.disconnect().catch(error => {
         console.log(error);
         console.info(chalk.red('Can not disconnected from MongoDB!'));
     });

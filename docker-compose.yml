@@ -1,0 +1,30 @@
+version: "2.0"
+services:
+  rosbackend:
+    build: .
+    restart: always
+    container_name: rosbackend
+
+  # 定义我们的nginx服务
+  nginx-host:
+    # 定义构建方式，这里表示通过本地镜像构建
+    image: nginx
+    restart: always
+    # 定义我们需要挂载到docker容器中的内容
+    volumes:
+        - /root/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+    # 定义端口映射
+      - "81:81"
+    links:
+    # 定义容器间的链接
+      - rosbackend
+    container_name: nginx
+
+  mongo:  # 会自动从Docker Hub上自动获取mongo这个镜像
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017  # 本地端口(可自定义):容器内默认端口(mongo设定为27017)
+    volumes:
+      - ./setup:/docker-entrypoint-initdb.d/  # 本地文件路径:容器内映射路径
