@@ -31,6 +31,7 @@ module.exports = function (app) {
     app.route('/api/commodity/:id').get(commodityController.findById)
     app.route('/api/commodity/:id').delete(commodityController.delCommodity)
     app.route('/api/commodity').get(commodityController.findAll)
+    app.route('/api/commodity').put(commodityController.updateCommodity)
     app.route('/api/commodity').post(commodityController.saveCommodity)
     //login
     app.route('/api/login').get(loginController.login)
