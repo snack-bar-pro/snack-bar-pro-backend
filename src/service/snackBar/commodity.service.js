@@ -1,7 +1,7 @@
 const commodityRepository = require('../../repository/snackBar/commodity.repository')
 const moment = require('moment')
 
-const findAll = async (page, limit = 10) => {
+const findAll = async (page, limit) => {
   return await commodityRepository.findAllCommodity(page, limit)
 }
 
