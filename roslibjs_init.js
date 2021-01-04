@@ -50,6 +50,9 @@ module.exports.init = () => {
     listener.subscribe(async (message) => {
         console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
         try {
+          if(message.status.status === 2) {
+            return;
+          }
           const currentOrder = orderQueue.shift();
           const isReached = message.status.status === 3;
           currentOrder && await orderService.updateOrderStatus(isReached ? 'reached' : 'error', currentOrder);
