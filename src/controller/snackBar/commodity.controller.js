@@ -1,7 +1,8 @@
 const commodityService = require('../../service/snackBar/commodity.service')
 
 const findAll = async (req, res) => {
-  const {page, limit} = req.param
+  const page = parseInt(req.query.page,10);
+  const limit = parseInt(req.query.limit,10);
   try{
     const result = await commodityService.findAll(page, limit)
     return res.json({
