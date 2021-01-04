@@ -2,10 +2,7 @@ const Order = require('../../model/order.model');
 const mongoose = require('mongoose');
 
 const saveOrder = order => {
-    let newOrder = new Order({
-        ...order,
-        user: 'admin'
-    });
+    let newOrder = new Order({...order});
     return newOrder.save();
 };
 const searchOrder = (params) => {
