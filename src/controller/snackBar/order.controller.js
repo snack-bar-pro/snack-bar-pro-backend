@@ -1,6 +1,7 @@
 const orderService = require('../../service/snackBar/order.service');
 const { orderQueue } = require('../../orderQueue');
 const moveBaseService = require('../../service/ros/moveBase.service');
+const { setAtHome } = require('../../data/MoveBaseResult');
 
 const createNewOrder = async (req, res) => {
   let order = req.body;
@@ -45,6 +46,7 @@ const handleOrder = async (req, res) => {
     if (orderQueue.isEmpty()) {
       await orderService.updateOrderStatus('processing', order);
       moveBaseService.setTargetPoseGoal(order.address);
+      setAtHome(false);
     }
     orderQueue.push(order);
     return res.status(200).json(order);
