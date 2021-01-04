@@ -2,6 +2,7 @@ const orderService = require('../../service/snackBar/order.service');
 const { orderQueue } = require('../../orderQueue');
 const moveBaseService = require('../../service/ros/moveBase.service');
 const { setAtHome } = require('../../data/MoveBaseResult');
+const { decode } = require('../../util/jwt.util');
 
 const createNewOrder = async (req, res) => {
   let order = req.body;
@@ -14,8 +15,10 @@ const createNewOrder = async (req, res) => {
 };
 const findOrder = async (req, res) => {
   try {
-      let order = await orderService.searchOrder(req.query);
-      return res.status(200).json(order);
+    const token = req.headers.authorization;
+    const openid = decode(token).openid;
+    let order = await orderService.searchOrder({...req.query, openid});
+    return res.status(200).json(order);
   }catch (e) {
     return res.status(500).json({message: e.message});
   }
@@ -41,6 +44,8 @@ const updateOrder = async (req, res) => {
   
 const handleOrder = async (req, res) => {
   let order = req.body;
+  const token = req.headers.authorization;
+  order.openid = decode(token).openid;
   try {
     order = await orderService.createNewOrder(order);
     if (orderQueue.isEmpty()) {
