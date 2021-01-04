@@ -3,7 +3,7 @@ const config = require('./lib/config');
 const { orderQueue } = require('./src/orderQueue');
 const { eventEmitter } = require('./src/eventBus');
 const orderService = require('./src/service/snackBar/order.service');
-const { setReached } = require('./src/data/MoveBaseResult');
+const { setReached, setAtHome, getAtHome } = require('./src/data/MoveBaseResult');
 
 const homePosition = {
   position: {
@@ -18,8 +18,6 @@ const homePosition = {
     w: 0.999995180665
   }
 };
-
-let atHome = false;
 
 module.exports.init = () => {
     console.log('=======init ros==========')
@@ -50,7 +48,7 @@ module.exports.init = () => {
     listener.subscribe(async (message) => {
         console.log('Received message on ' + listener.name + ': ' + JSON.stringify(message));
         try {
-          if(message.status.status === 2) {
+          if (message.status.status === 2) {
             return;
           }
           const currentOrder = orderQueue.shift();
@@ -64,10 +62,10 @@ module.exports.init = () => {
             if (nextOrder) {
               await orderService.updateOrderStatus("processing", nextOrder);
               eventEmitter.emit('setTargetPoseEvent', nextOrder.address);
-              atHome = false;
-            } else if (!atHome) {
+              setAtHome(false);
+            } else if (!getAtHome()) {
               eventEmitter.emit('setTargetPoseEvent', homePosition);
-              atHome = true;
+              setAtHome(true);
             }
           }, 10000);
         } catch (e) {
