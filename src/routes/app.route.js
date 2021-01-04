@@ -1,12 +1,24 @@
 const config = require('../../lib/config').config
 var express = require('express');
-const path = require('path')
+const path = require('path');
+const { verify } = require('../util/jwt.util');
+
 
 module.exports = function (app) {
     const moveBaseController = require('../controller/ros/moveBase.controller');
     const orderController = require('../controller/snackBar/order.controller');
     const commodityController = require('../controller/snackBar/commodity.controller');
     const loginController = require('../controller/snackBar/login.controller')
+
+    app.use('/api/orders*', function(req, res, next) {
+        const token = req.headers.authorization;
+        if (verify(token)) {
+            next();
+        } else {
+            res.status(401).json({message: 'invalid token'})
+        }
+    })
+    
     app.route('/api/setTargetPose').post(moveBaseController.setTargetPose);
     app.route('/api/move_base/result').get(moveBaseController.getMoveBaseStatus);
     // app.route('/api/move_base/reached').post(moveBaseController.setMoveBaseStatus);
