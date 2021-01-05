@@ -60,10 +60,34 @@ const handleOrder = async (req, res) => {
   }
 };
 
+const cleanOrderInQueue = (req, res) => {
+  try {
+    const size = orderQueue.size();
+    orderQueue.clean();
+    return res.status(200).json({message: `clean ${size} orders`});
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
+  }
+}
+
+const cleanOrderInDbByStatus = async (req, res) => {
+  try {
+    const status = req.query.status;
+    if (status) {
+      await orderService.deleteOrderByStatus(status);
+    }
+    return res.status(200).json({message: `clean ${status} orders in DB`});
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
+  }
+}
+
 module.exports = {
     createNewOrder,
     findOrder,
     findOrderById,
     updateOrder,
-    handleOrder
+    handleOrder,
+    cleanOrderInQueue,
+    cleanOrderInDbByStatus
 };
