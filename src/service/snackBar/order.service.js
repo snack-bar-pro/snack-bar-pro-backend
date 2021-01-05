@@ -51,11 +51,16 @@ const updateOrderStatus = async (status, order) => {
     await updateOrder(order);
 };
 
+const deleteOrderByStatus = async status => {
+    await orderRepository.deleteOrderByStatus(status);
+}
+
 module.exports = {
     createNewOrder,
     findOrder,
     findOrderById,
     updateOrder,
     updateOrderStatus,
-    searchOrder
+    searchOrder,
+    deleteOrderByStatus
 };
