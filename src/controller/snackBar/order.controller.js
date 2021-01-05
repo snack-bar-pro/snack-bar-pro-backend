@@ -82,12 +82,24 @@ const cleanOrderInDbByStatus = async (req, res) => {
   }
 }
 
+    
+const findAllOrder = async (req, res) => {
+  try {
+    const result = await orderService.findAll();
+    return res.status(200).json(result)
+  } catch(e) {
+    return res.status(500).json({ message: e.message })
+  }
+
+} 
+
 module.exports = {
     createNewOrder,
     findOrder,
     findOrderById,
     updateOrder,
     handleOrder,
+    findAllOrder,
     cleanOrderInQueue,
     cleanOrderInDbByStatus
 };

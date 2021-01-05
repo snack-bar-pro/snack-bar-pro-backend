@@ -35,10 +35,11 @@ module.exports = function (app) {
     });
     //order
     app.route('/api/orders').post(orderController.handleOrder);
+    app.route('/api/orders/all').get(orderController.findAllOrder);
     app.route('/api/orders').get(orderController.findOrder);
     app.route('/api/orders/:id').get(orderController.findOrderById);
     app.route('/api/orders').put(orderController.updateOrder);
-    app.route('/api/test/orders').delete(orderController.cleanOrderInDbByStatus);
+    app.route('/api/orders').delete(orderController.cleanOrderInDbByStatus);
     //commodity
     app.route('/api/commodity/:id').get(commodityController.findById)
     app.route('/api/commodity/:id').delete(commodityController.delCommodity)

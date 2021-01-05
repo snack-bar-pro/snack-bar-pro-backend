@@ -55,6 +55,11 @@ const deleteOrderByStatus = async status => {
     await orderRepository.deleteOrderByStatus(status);
 }
 
+const findAll = async () => {
+    const result = await orderRepository.searchOrder();
+    return result;
+}
+
 module.exports = {
     createNewOrder,
     findOrder,
@@ -62,5 +67,6 @@ module.exports = {
     updateOrder,
     updateOrderStatus,
     searchOrder,
-    deleteOrderByStatus
+    deleteOrderByStatus,
+    findAll
 };
