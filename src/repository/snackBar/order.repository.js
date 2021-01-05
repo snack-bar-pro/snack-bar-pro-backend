@@ -21,10 +21,15 @@ const updateOrder = (order) => {
     return Order.update({'_id': id}, order);
 };
 
+const deleteOrderByStatus = status => {
+    return Order.deleteMany({'orderStatus': status});
+};
+
 module.exports = {
     saveOrder,
     findOrder,
     findOrderById,
     updateOrder,
-    searchOrder
+    searchOrder,
+    deleteOrderByStatus
 };

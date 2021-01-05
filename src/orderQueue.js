@@ -14,6 +14,12 @@ class OrderQueue {
   first() {
     return this.isEmpty() ? null : this.orderQueue[0];
   }
+  clean() {
+    this.orderQueue.length = 0;
+  }
+  size() {
+    return this.orderQueue.length;
+  }
 }
 
 module.exports.orderQueue = new OrderQueue();
